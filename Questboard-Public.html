@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Questboard — Daily XP Planner</title>
+<style>
+:root{color-scheme:dark;--bg:#101522;--panel:#192235;--panel2:#202d43;--line:#30405a;--text:#f3f6fc;--muted:#aab8ce;--gold:#f3c96b;--green:#72d6a0;--blue:#83b8ff;--pink:#e8a4d5;--shadow:0 18px 50px #0005}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#233657 0,transparent 36%),var(--bg);color:var(--text);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
+button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:#263650;color:var(--text);font-weight:650;transition:.18s}button:hover{filter:brightness(1.15);transform:translateY(-1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}.primary{background:var(--gold);color:#222;border-color:transparent}.quiet{background:transparent}.small{font-size:12px;padding:7px 10px}.wrap{max-width:1050px;margin:auto;padding:28px 20px 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#f6d47f,#e99b68);display:grid;place-items:center;color:#1b2433;font-size:22px;box-shadow:0 8px 25px #e9aa6250}.brand h1{font-size:20px;margin:0;letter-spacing:.08em}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.top-actions{display:flex;gap:8px;flex-wrap:wrap}.hero{background:linear-gradient(120deg,#263a59,#1b2940 65%,#28324a);border:1px solid #435775;border-radius:22px;padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"✦";position:absolute;right:28px;top:-28px;font-size:150px;color:#ffffff09;pointer-events:none}.hero-row{display:flex;align-items:end;justify-content:space-between;gap:18px}.eyebrow{font-size:11px;letter-spacing:.16em;color:#b8c9e1;font-weight:800}.score{font-size:clamp(42px,8vw,64px);line-height:1.05;font-weight:850;letter-spacing:-.05em;margin:6px 0}.score span{font-size:17px;letter-spacing:0;color:var(--gold)}.sub{color:var(--muted);font-size:13px}.level{text-align:right}.level strong{display:block;color:var(--gold);font-size:25px}.progress{height:9px;background:#ffffff20;border-radius:20px;margin-top:18px;overflow:hidden}.progress>div{height:100%;width:0;background:linear-gradient(90deg,#f3c96b,#ffe7a5);border-radius:20px;transition:width .5s}.progress-label{display:flex;justify-content:space-between;color:#bdcbe0;font-size:11px;margin-top:7px}.controls{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0}.controls label{font-size:12px;color:var(--muted);font-weight:700}.controls select{min-width:210px;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}.plan-note{color:var(--muted);font-size:12px;margin-left:auto}.grid{display:grid;grid-template-columns:1.25fr .85fr;gap:16px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow)}.panel h2{font-size:15px;margin:0 0 4px;letter-spacing:.02em}.section-sub{color:var(--muted);font-size:12px;margin-bottom:15px}.task-list{display:grid;gap:9px}.task{width:100%;display:flex;align-items:center;gap:12px;text-align:left;padding:13px;background:var(--panel2);border:1px solid #354761;border-radius:13px;color:var(--text)}.task.done{border-color:#39795d;background:#1b3b35}.check{width:25px;height:25px;border:1.5px solid #8292aa;border-radius:8px;display:grid;place-items:center;flex:none;color:#14251f}.task.done .check{background:var(--green);border-color:var(--green)}.task-copy{flex:1;min-width:0}.task-name{font-weight:700}.task.done .task-name{text-decoration:line-through;color:#b7d8c8}.task-meta{font-size:11px;color:var(--muted);margin-top:2px}.points{font-weight:800;color:var(--gold);white-space:nowrap}.task.done .points{color:var(--green)}.bonus-panel{border-color:#66533b}.bonus-panel h2{color:var(--gold)}.bonus-panel .task{background:#302b29;border-color:#574738}.bonus-panel .task.done{background:#1b3b35;border-color:#39795d}.completion{margin-top:14px;padding:14px;border:1px dashed #8a7449;background:#332f28;border-radius:13px;display:flex;align-items:center;justify-content:space-between;gap:12px}.completion strong{color:var(--gold);font-size:19px}.completion small{display:block;color:#c7bda9}.completion.earned{border-style:solid;background:#284337;border-color:#4e9b75}.completion.earned strong{color:var(--green)}.empty{padding:18px;color:var(--muted);font-size:13px;text-align:center;border:1px dashed var(--line);border-radius:12px}.utility{margin-top:16px}.minute-row{display:flex;gap:8px;margin-top:10px}.minute-row input{width:120px;background:#111a29;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px}.history{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:12px}.history:last-child{border:0}.muted{color:var(--muted)}.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);background:#f3c96b;color:#222;font-weight:800;padding:12px 18px;border-radius:99px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.25s;z-index:5}.toast.show{opacity:1;transform:translate(-50%,0)}.modal-back{position:fixed;inset:0;background:#050914c9;display:none;align-items:center;justify-content:center;padding:18px;z-index:10}.modal-back.open{display:flex}.modal{max-width:650px;width:100%;max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}.modal h2{margin:0 0 8px}.modal p,.modal li{color:var(--muted);font-size:13px}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px;flex-wrap:wrap}.file-input{display:none}.notice{padding:11px 13px;background:#263a59;border-radius:10px;color:#d4e2f6;font-size:12px;margin:12px 0}.confetti{animation:pop .45s ease}@keyframes pop{0%{transform:scale(.96)}55%{transform:scale(1.025)}100%{transform:scale(1)}}@media(max-width:760px){.grid{grid-template-columns:1fr}.hero-row{align-items:start}.plan-note{width:100%;margin:0}.controls{align-items:stretch}.controls select{flex:1}.top{align-items:flex-start;flex-direction:column}.top-actions{width:100%}.top-actions button{flex:1}}
+</style>
+</head>
+<body>
+<div class="wrap">
+ <header class="top">
+  <div class="brand"><div class="logo">✦</div><div><h1>QUESTBOARD</h1><p>A flexible daily quest tracker. Progress counts. No penalties.</p></div></div>
+  <div class="top-actions">
+   <button class="quiet small" id="historyBtn">▤ History</button>
+   <button class="quiet small" id="soundBtn" title="Toggle sound">🔊 Sound on</button>
+   <button class="quiet small" id="settingsBtn">⚙ Settings & data</button>
+  </div>
+ </header>
+ <section class="hero" id="hero">
+  <div class="hero-row"><div><div class="eyebrow" id="todayLabel">TODAY</div><div class="score"><span id="total">0</span> <span>XP</span></div><div class="sub" id="earnedLabel">Every completed task is a win.</div></div><div class="level"><div class="eyebrow">YOUR LEVEL</div><strong id="level">1</strong><div class="sub" id="levelLabel">0 / 500 XP</div></div></div>
+  <div class="progress"><div id="levelBar"></div></div><div class="progress-label"><span id="progressLeft">Level progress</span><span id="progressRight">500 XP to next level</span></div>
+ </section>
+ <div class="controls">
+  <label for="planSelect">TODAY'S PLAN</label><select id="planSelect"></select>
+  <button class="quiet small" id="autoBtn">↻ Use automatic plan</button>
+  <span class="plan-note" id="planMode">Automatic plan</span>
+ </div>
+ <div class="grid">
+  <section class="panel">
+   <h2>☀ Daily tasks</h2><div class="section-sub" id="dailyCount">Complete these at your own pace.</div>
+   <div class="task-list" id="dailyList"></div>
+   <div class="completion" id="completionBox"><div><b>Daily completion bonus</b><small id="completionText">Complete every daily task to earn the extra reward.</small></div><strong id="completionPoints">+800 XP</strong></div>
+   <div style="margin-top:20px"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><h2>📌 Tasks for today</h2><button class="small primary" id="addTodayTaskBtn" aria-label="Add task">＋ Add</button></div><div class="section-sub">Date-specific or one-off tasks in this plan.</div><div class="task-list" id="taskList"></div></div>
+  </section>
+  <section>
+   <div class="panel bonus-panel">
+    <h2>✧ Bonus dailies</h2><div class="section-sub">Optional quests with bigger rewards.</div>
+    <div class="task-list" id="bonusList"></div>
+   </div>
+   <div class="panel utility">
+    <h2>⏱ Unmeasured productivity</h2><div class="section-sub">Every productive minute counts. +3 XP per minute.</div>
+    <div class="minute-row"><input id="minutes" type="number" min="1" max="1440" placeholder="Minutes"><button class="primary" id="addMinutes">Add XP</button></div>
+   </div>
+   <div class="panel utility">
+    <h2>Today's record</h2><div class="section-sub">A reminder of what you've already done.</div>
+    <div id="record"><div class="empty">Completed tasks will appear here as you earn XP.</div></div>
+   </div>
+  </section>
+ </div>
+ <p class="sub" style="text-align:center;margin-top:22px">Your score is a record of effort, not a measure of your worth.</p>
+</div>
+<div class="toast" id="toast"></div>
+<div class="modal-back" id="historyBack"><div class="modal">
+ <h2>Quest history</h2>
+ <p>Your daily XP totals are saved on this device. Pick a weekday to compare it with previous weeks.</p>
+ <div class="minute-row" style="flex-wrap:wrap">
+  <select id="historyDay" aria-label="Filter by day" style="background:#111a29;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px"><option value="All">All days</option><option value="Sunday">Sunday</option><option value="Monday">Monday</option><option value="Tuesday">Tuesday</option><option value="Wednesday">Wednesday</option><option value="Thursday">Thursday</option><option value="Friday">Friday</option><option value="Saturday">Saturday</option></select>
+  <select id="historyPlan" aria-label="Filter by plan" style="background:#111a29;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px"><option value="All">All plans</option></select>
+  <select id="historySort" aria-label="Sort history" style="background:#111a29;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px"><option value="date-desc">Newest first</option><option value="date-asc">Oldest first</option><option value="plan">Sort by plan</option></select>
+ </div>
+ <div id="historyContent" style="margin-top:14px"></div>
+ <div class="modal-actions"><button id="closeHistory">Close</button></div>
+</div></div>
+<div class="modal-back" id="modalBack"><div class="modal">
+ <h2>Settings & data</h2>
+ <p>Import a CSV to add or replace your plans. Your current progress is saved in this browser on this computer.</p>
+ <div class="notice"><b>CSV columns:</b> Plan, Category, Name, Points, Days, PlanDays, CompletionBonus, Date<br>
+Category: Daily, Bonus, or Task. Days: Everyday, Weekdays, Weekends, or individual days (e.g. Mon;Wed;Fri). PlanDays controls automatic plan selection. Date is optional (YYYY-MM-DD) for date-specific Tasks.</div>
+ <p><b>Import behavior:</b> choose whether to replace all plans or add/update plans by name. Existing progress is kept where task IDs still match.</p>
+ <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="primary" id="importReplace">Import & replace plans</button><button id="importMerge">Import & merge plans</button><button id="exportBtn">Export current plans CSV</button><button id="resetToday">Reset today's progress</button></div>
+ <input class="file-input" type="file" id="csvFile" accept=".csv,text/csv">
+ <p id="settingsStatus"></p>
+ <hr style="border-color:var(--line);margin:18px 0">
+ <p><b>Plan selection:</b> automatic selection uses the plan whose PlanDays matches today. You can manually switch plans before completing any task. Once a task is completed, the plan is locked for the rest of that day to protect your score.</p>
+ <div class="modal-actions"><button id="closeSettings">Close</button></div>
+</div></div>
+<script>
+const DAY_NAMES=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const slug=s=>String(s).toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const DEFAULT_PLANS=[
+ {name:'Everyday Starter Plan',planDays:'Weekdays',completionBonus:300,tasks:[
+  ['Make your bed','Daily',50,'Everyday'],['Drink a glass of water','Daily',50,'Everyday'],['Move your body for 20 minutes','Daily',100,'Everyday'],['Tidy one small area','Daily',50,'Everyday'],['Read or learn for 15 minutes','Daily',100,'Everyday'],['Take care of one important task','Task',100,'Everyday'],['Practice a hobby','Bonus',150,'Everyday'],['Spend time outdoors','Bonus',100,'Everyday']
+ ].map((t,i)=>({id:'starter-'+i,name:t[0],category:t[1],points:t[2],days:t[3],date:''}))},
+ {name:'Weekend Reset Plan',planDays:'Weekends',completionBonus:250,tasks:[
+  ['Tidy your living space','Daily',100,'Everyday'],['Plan the week ahead','Daily',100,'Everyday'],['Get some fresh air','Daily',50,'Everyday'],['Prepare something for the week','Task',100,'Everyday'],['Enjoy a creative activity','Bonus',150,'Everyday']
+ ].map((t,i)=>({id:'weekend-'+i,name:t[0],category:t[1],points:t[2],days:t[3],date:''}))}
+];
+const $=id=>document.getElementById(id);
+const dateKey=()=>{const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const clone=x=>JSON.parse(JSON.stringify(x));
+let plans=clone(DEFAULT_PLANS),state={date:dateKey(),planName:null,manual:false,completed:{},minuteEntries:[],bonusClaimed:false};
+let sound=true,context=null,toastTimer;
+let historyStore={};
+function blankState(date=dateKey()){return {date,planName:null,manual:false,completed:{},minuteEntries:[],customTasks:[],notes:{},bonusClaimed:false};}
+function load(){
+ try{
+  const p=JSON.parse(localStorage.getItem('questboard-public-plans-v1'));if(Array.isArray(p)&&p.length)plans=p;
+  historyStore=JSON.parse(localStorage.getItem('questboard-public-history-v1')||'{}')||{};
+  const s=JSON.parse(localStorage.getItem('questboard-public-state-v1'));if(s)state=s;
+ }catch(e){}
+ if(state.date!==dateKey()){
+  archiveDay(state);
+  state=blankState();
+ }
+ state.customTasks=state.customTasks||[];
+ state.notes=state.notes||{};
+ state.minuteEntries=state.minuteEntries||[];
+ if(!plans.some(p=>p.name===state.planName)){state.planName=null;state.manual=false;}
+ save();
+}
+function save(){
+ if(state?.date===dateKey())archiveDay(state);
+ localStorage.setItem('questboard-public-plans-v1',JSON.stringify(plans));
+ localStorage.setItem('questboard-public-state-v1',JSON.stringify(state));
+ localStorage.setItem('questboard-public-history-v1',JSON.stringify(historyStore));
+}
+function archiveDay(s){
+ if(!s||!s.date)return;
+ const p=plans.find(x=>x.name===s.planName)||todayPlan();
+ const total=calculateEarned(s,p);
+ historyStore[s.date]={date:s.date,planName:p?.name||'Unknown plan',xp:total,completed:Object.keys(s.completed||{}).filter(k=>s.completed[k]).length,minutes:(s.minuteEntries||[]).reduce((a,b)=>a+(Number(b.minutes)||0),0)};
+}
+function calculateEarned(s,p){
+ if(!p)return 0;
+ let sum=(p.tasks||[]).reduce((a,t)=>a+(s.completed?.[t.id]?taskXP(t):0),0);
+ sum+=(s.customTasks||[]).reduce((a,t)=>a+(s.completed?.[t.id]?Number(t.points)||0:0),0);
+ sum+=(s.minuteEntries||[]).reduce((a,b)=>a+(Number(b.minutes)||0)*3,0);
+ const ds=(p.tasks||[]).filter(t=>t.category==='Daily'&&matches(t.days,DAY_NAMES[new Date(s.date+'T12:00:00').getDay()])&&(!t.date||t.date===s.date));
+ if(ds.length&&ds.every(t=>s.completed?.[t.id]))sum+=Number(p.completionBonus)||0;
+ return sum;
+}
+function todayPlan(){const d=new Date().getDay();const day=DAY_NAMES[d];return plans.find(p=>matches(p.planDays||'Everyday',day))||plans[0];}
+function matches(rule,day){const r=String(rule||'Everyday').toLowerCase().replace(/\s/g,'');if(!r||r==='everyday'||r==='all')return true;if(r==='weekdays')return !['Sat','Sun'].includes(day);if(r==='weekends')return ['Sat','Sun'].includes(day);return r.split(/[;,|]/).some(x=>x.slice(0,3).toLowerCase()===day.toLowerCase());}
+function activePlan(){return plans.find(p=>p.name===state.planName)||todayPlan()||plans[0];}
+function visibleTasks(category){const p=activePlan(),day=DAY_NAMES[new Date().getDay()],today=dateKey();return p.tasks.filter(t=>t.category===category&&!(category==='Bonus'&&t.name.toLowerCase().includes('unmeasured'))&&matches(t.days,day)&&(!t.date||t.date===today));}
+function completed(id){return !!state.completed[id]}
+function hasActivity(){return Object.values(state.completed).some(Boolean)||(state.minuteEntries||[]).length>0}
+function taskXP(t){return t.category==='Bonus'&&t.name.toLowerCase().includes('unmeasured')?0:Number(t.points)||0}
+function allDailyDone(){const ds=visibleTasks('Daily');return ds.length>0&&ds.every(t=>completed(t.id))}
+function earned(){const p=activePlan();let sum=0;for(const t of p.tasks){if(state.completed[t.id])sum+=taskXP(t);}for(const t of (state.customTasks||[])){if(state.completed[t.id])sum+=Number(t.points)||0;}sum+=(state.minuteEntries||[]).reduce((a,b)=>a+b.minutes*3,0);if(allDailyDone())sum+=Number(p.completionBonus)||0;return sum;}
+function levelInfo(xp){const level=Math.floor(xp/500)+1;return {level,into:xp%500,need:500,progress:(xp%500)/5};}
+function render(){if(!plans.length)return;const p=activePlan(),now=new Date(),day=DAY_NAMES[now.getDay()];$('todayLabel').textContent=now.toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric'}).toUpperCase();$('total').textContent=earned().toLocaleString();const li=levelInfo(earned());$('level').textContent=li.level;$('levelLabel').textContent=`${li.into} / 500 XP`;$('levelBar').style.width=li.progress+'%';$('progressLeft').textContent=`${li.into} XP earned toward level ${li.level+1}`;$('progressRight').textContent=`${500-li.into} XP to next level`;$('earnedLabel').textContent=`${Object.values(state.completed).filter(Boolean).length} tasks checked off today. Keep going!`;
+const select=$('planSelect');select.innerHTML='';plans.forEach(pl=>{const o=document.createElement('option');o.value=pl.name;o.textContent=pl.name;select.append(o)});select.value=p.name;select.disabled=hasActivity();$('autoBtn').disabled=select.disabled;$('planMode').textContent=state.manual?'Manual selection':'Automatic plan for '+day;
+drawList('dailyList',visibleTasks('Daily'));drawList('bonusList',visibleTasks('Bonus'));drawList('taskList',[...visibleTasks('Task'),...(state.customTasks||[])]);
+const ds=visibleTasks('Daily'),done=ds.filter(t=>completed(t.id)).length;$('dailyCount').textContent=`${done} of ${ds.length} completed · ${ds.reduce((a,t)=>a+taskXP(t),0)} XP available`;
+const box=$('completionBox');box.classList.toggle('earned',allDailyDone());$('completionText').textContent=allDailyDone()?'All daily tasks complete. You earned the bonus!':`${done}/${ds.length} daily tasks complete · finish all to claim it.`;$('completionPoints').textContent=(allDailyDone()?'+':'')+(Number(p.completionBonus)||0).toLocaleString()+' XP';
+const entries=[];p.tasks.filter(t=>completed(t.id)).forEach(t=>entries.push({name:t.name,xp:taskXP(t)}));(state.customTasks||[]).filter(t=>completed(t.id)).forEach(t=>entries.push({name:t.name,xp:Number(t.points)||0}));(state.minuteEntries||[]).forEach(e=>entries.push({name:`Unmeasured productivity (${e.minutes} min)`,xp:e.minutes*3}));$('record').innerHTML=entries.length?entries.map(e=>`<div class="history"><span>${esc(e.name)}</span><b style="color:var(--green)">+${e.xp} XP</b></div>`).join(''):'<div class="empty">Completed tasks will appear here as you earn XP.</div>';
+}
+function drawList(id,tasks){
+ const el=$(id);el.innerHTML='';
+ if(!tasks.length){el.innerHTML='<div class="empty">No tasks scheduled in this section for today.</div>';return;}
+ tasks.forEach(t=>{
+  const done=completed(t.id),wrap=document.createElement('div');
+  wrap.style.display='flex';wrap.style.gap='7px';wrap.style.alignItems='stretch';
+  const b=document.createElement('button');b.className='task'+(done?' done':'');b.style.flex='1';
+  const note=state.notes?.[t.id]||'';
+  b.innerHTML=`<span class="check">${done?'✓':''}</span><span class="task-copy"><span class="task-name">${esc(t.name)}</span>${note?`<span class="task-meta">✎ ${esc(note)}</span>`:`<span class="task-meta">${done?'Completed · tap to undo':'Tap to complete'}</span>`}</span><span class="points">${done?'✓ ': '+'}${taskXP(t)} XP</span>`;
+  b.addEventListener('click',()=>toggle(t));
+  const noteBtn=document.createElement('button');noteBtn.className='quiet small';noteBtn.textContent='✎';noteBtn.title='Add or edit today’s note';noteBtn.setAttribute('aria-label','Add or edit note for '+t.name);noteBtn.style.padding='8px 11px';
+  noteBtn.addEventListener('click',()=>editDailyNote(t));
+  wrap.append(b,noteBtn);el.append(wrap);
+ });
+}
+function editDailyNote(t){
+ state.notes=state.notes||{};
+ const note=prompt('Optional note for this task today only:',state.notes[t.id]||'');
+ if(note===null)return;
+ if(note.trim())state.notes[t.id]=note.trim();else delete state.notes[t.id];
+ save();render();showToast(note.trim()?'Today’s note saved.':'Today’s note cleared.');
+}
+function addTodayTask(){
+ const name=prompt('What is the task?');if(!name||!name.trim())return;
+ const xpText=prompt('Choose an XP reward (50–200):','100');if(xpText===null)return;
+ const xp=Number(xpText);if(!Number.isInteger(xp)||xp<50||xp>200){showToast('Choose a whole number from 50 to 200 XP.');return;}
+ const note=prompt('Optional note / footnote:','')||'';
+ state.customTasks=state.customTasks||[];
+ state.notes=state.notes||{};
+ state.customTasks.push({id:'today-'+Date.now(),name:name.trim(),category:'Task',points:xp,days:'Everyday',date:dateKey(),note:note.trim(),custom:true});
+ save();render();showToast('Today-only task added.');
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function celebrateLevelUp(level){showToast('✦ LEVEL UP! You reached level '+level+' ✦');$('hero').classList.add('confetti');setTimeout(()=>$('hero').classList.remove('confetti'),1100);[523,659,784,1047,1319].forEach((f,i)=>setTimeout(()=>tone(f,.22),i*125));}
+function toggle(t){
+ const oldLevel=levelInfo(earned()).level,before=allDailyDone();
+ if(completed(t.id)){delete state.completed[t.id];state.bonusClaimed=false;showToast('Task unchecked · points returned');tone(240,.07);}
+ else{
+  state.completed[t.id]=true;showToast(`+${taskXP(t)} XP · ${t.name}`);tone(t.category==='Bonus'?880:660,.12);
+  const after=allDailyDone();if(!before&&after){setTimeout(()=>{showToast('✦ Daily quests complete! +'+(Number(activePlan().completionBonus)||0)+' bonus XP');tone(1040,.2);$('hero').classList.add('confetti');setTimeout(()=>$('hero').classList.remove('confetti'),600)},180);}
+ }
+ state.bonusClaimed=allDailyDone();save();render();
+ const newLevel=levelInfo(earned()).level;if(newLevel>oldLevel)celebrateLevelUp(newLevel);
+}
+function tone(freq,duration){if(!sound)return;try{context=context||new(window.AudioContext||window.webkitAudioContext)();const o=context.createOscillator(),g=context.createGain();o.type='sine';o.frequency.value=freq;g.gain.setValueAtTime(.0001,context.currentTime);g.gain.exponentialRampToValueAtTime(.13,context.currentTime+.015);g.gain.exponentialRampToValueAtTime(.0001,context.currentTime+duration);o.connect(g);g.connect(context.destination);o.start();o.stop(context.currentTime+duration+.02);}catch(e){}}
+function showToast(s){const el=$('toast');el.textContent=s;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2100);}
+function renderHistory(){
+ const day=$('historyDay').value,planFilter=$('historyPlan').value,sort=$('historySort').value;
+ const days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+ let rows=Object.values(historyStore);
+ // Include today's live snapshot in history without requiring the day to end.
+ const live={date:dateKey(),xp:earned(),completed:Object.values(state.completed).filter(Boolean).length,minutes:(state.minuteEntries||[]).reduce((a,b)=>a+b.minutes,0),planName:activePlan().name};
+ rows=rows.filter(x=>x.date!==live.date);rows.push(live);
+ if(day!=='All')rows=rows.filter(x=>days[new Date(x.date+'T12:00:00').getDay()]===day);
+ if(planFilter!=='All')rows=rows.filter(x=>x.planName===planFilter);
+ if(sort==='plan')rows.sort((a,b)=>(a.planName||'').localeCompare(b.planName||'')||b.date.localeCompare(a.date));
+ else if(sort==='date-asc')rows.sort((a,b)=>a.date.localeCompare(b.date));
+ else rows.sort((a,b)=>b.date.localeCompare(a.date));
+ $('historyContent').innerHTML=rows.length?rows.map(x=>`<div class="history"><span><b>${new Date(x.date+'T12:00:00').toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'})}</b><br><span class="muted">${esc(x.planName||'')} · ${x.completed||0} tasks · ${x.minutes||0} min</span></span><b style="color:var(--gold)">${Number(x.xp).toLocaleString()} XP</b></div>`).join(''):'<div class="empty">No matching history yet. Your records will appear here as you use Questboard.</div>';
+}
+function populateHistoryPlans(){
+ const sel=$('historyPlan'),keep=sel.value;sel.innerHTML='<option value="All">All plans</option>';
+ [...new Set([...Object.values(historyStore).map(x=>x.planName),activePlan().name].filter(Boolean))].sort().forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;sel.append(o)});
+ sel.value=[...sel.options].some(o=>o.value===keep)?keep:'All';
+}
+$('historyBtn').onclick=()=>{$('historyBack').classList.add('open');populateHistoryPlans();renderHistory();};
+$('closeHistory').onclick=()=>$('historyBack').classList.remove('open');
+$('historyDay').onchange=renderHistory;
+$('historyPlan').onchange=renderHistory;
+$('historySort').onchange=renderHistory;
+$('historyBack').addEventListener('click',e=>{if(e.target===$('historyBack'))$('historyBack').classList.remove('open')});
+$('addTodayTaskBtn').onclick=addTodayTask;
+$('planSelect').addEventListener('change',e=>{if(hasActivity()){showToast('Plan locked after earning points today.');render();return;}state.planName=e.target.value;state.manual=true;save();render();});
+$('autoBtn').onclick=()=>{if(hasActivity())return;state.planName=todayPlan().name;state.manual=false;save();render();showToast('Automatic plan selected');};
+$('addMinutes').onclick=()=>{const n=Math.floor(Number($('minutes').value));if(!Number.isFinite(n)||n<1||n>1440){showToast('Enter a number of minutes from 1 to 1440.');return;}const oldLevel=levelInfo(earned()).level;state.minuteEntries.push({minutes:n});$('minutes').value='';save();render();showToast(`+${n*3} XP · productive time counts`);tone(780,.15);const newLevel=levelInfo(earned()).level;if(newLevel>oldLevel)celebrateLevelUp(newLevel);};
+$('soundBtn').onclick=()=>{sound=!sound;$('soundBtn').textContent=sound?'🔊 Sound on':'🔇 Sound off';if(sound)tone(600,.08);};
+$('settingsBtn').onclick=()=>$('modalBack').classList.add('open');$('closeSettings').onclick=()=>$('modalBack').classList.remove('open');$('modalBack').addEventListener('click',e=>{if(e.target===$('modalBack'))$('modalBack').classList.remove('open')});
+let importMode='replace';function chooseImport(mode){importMode=mode;$('csvFile').click();}$('importReplace').onclick=()=>chooseImport('replace');$('importMerge').onclick=()=>chooseImport('merge');
+$('csvFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{const rows=parseCSV(await file.text());const imported=fromRows(rows);if(!imported.length)throw Error('No valid task rows found.');if(importMode==='replace')plans=imported;else imported.forEach(p=>{const i=plans.findIndex(x=>x.name===p.name);if(i>=0)plans[i]=p;else plans.push(p)});state={date:dateKey(),planName:null,manual:false,completed:{},minuteEntries:[],customTasks:[],notes:{},bonusClaimed:false};save();render();$('settingsStatus').textContent=`Imported ${imported.length} plan(s). Today's progress was reset because the plan set changed.`;}catch(err){$('settingsStatus').textContent='Import failed: '+err.message;}e.target.value='';};
+function parseCSV(s){const rows=[];let row=[],v='',q=false;for(let i=0;i<s.length;i++){const c=s[i];if(q){if(c==='"'&&s[i+1]==='"'){v+='"';i++;}else if(c==='"')q=false;else v+=c;}else if(c==='"')q=true;else if(c===','){row.push(v);v='';}else if(c==='\n'){row.push(v);rows.push(row);row=[];v='';}else if(c!=='\r')v+=c;}if(v.length||row.length){row.push(v);rows.push(row);}return rows.filter(r=>r.some(x=>x.trim()));}
+function fromRows(rows){const head=rows.shift().map(x=>x.trim().toLowerCase());const ix=n=>head.indexOf(n.toLowerCase());const get=(r,n,def='')=>ix(n)>=0?(r[ix(n)]||def).trim():def;const map=new Map();rows.forEach(r=>{const name=get(r,'Plan','Imported plan');if(!map.has(name))map.set(name,{name,planDays:get(r,'PlanDays','Everyday'),completionBonus:Number(get(r,'CompletionBonus','0'))||0,tasks:[]});const p=map.get(name),taskName=get(r,'Name');if(!taskName)return;const category=get(r,'Category','Daily');const points=Number(get(r,'Points','0'));const date=get(r,'Date');p.tasks.push({id:slug(taskName),name:taskName,category:category==='Bonus'?'Bonus':category==='Task'?'Task':'Daily',points:Number.isFinite(points)?points:0,days:get(r,'Days','Everyday'),date});});return [...map.values()];}
+$('exportBtn').onclick=()=>{const rows=[['Plan','Category','Name','Points','Days','PlanDays','CompletionBonus','Date']];plans.forEach(p=>p.tasks.forEach(t=>rows.push([p.name,t.category,t.name,t.points,t.days,p.planDays,p.completionBonus,t.date||''])));const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='questboard-plans.csv';a.click();URL.revokeObjectURL(a.href);};
+$('resetToday').onclick=()=>{if(confirm('Reset all of today’s completed tasks and productivity entries? Your plans will not be changed.')){state={date:dateKey(),planName:activePlan().name,manual:state.manual,completed:{},minuteEntries:[],customTasks:[],notes:{},bonusClaimed:false};save();render();showToast('Today is reset. Fresh start!');}};
+load();render();if(state.manual&&state.planName)$('planMode').textContent='Manual selection';
+</script>
+</body>
+</html>
